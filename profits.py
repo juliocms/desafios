@@ -1,7 +1,22 @@
 class AcquirerLTDA:
 
     def profit_calculate(self, transactions, contracts):
-        return 0
+        profit = 0
+
+        for transaction in transactions:
+            valor_liquido = \
+                transaction["total_amount"] - (transaction["total_amount"] \
+                    * (transaction["discount_percentage"] or 0) / 100)
+
+            for contract in contracts:
+                if contract["client_id"] == transaction["client_id"] \
+                    and contract["is_active"]:
+                    profit_by_transaction = \
+                        valor_liquido * contract["percentage"] / 100
+                    profit += profit_by_transaction
+
+        return profit
+        
 
 transactions = [
     {"transaction_id": 1, "client_id": 3545, "total_amount": 3000, "discount_percentage": 6.99},
