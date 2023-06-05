@@ -15,7 +15,7 @@ class AcquirerLTDA:
                         valor_liquido * contract["percentage"] / 100
                     profit += profit_by_transaction
 
-        return profit
+        return "{:.3f}".format(profit)
         
 
 transactions = [
