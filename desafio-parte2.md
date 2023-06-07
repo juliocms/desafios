@@ -1,22 +1,14 @@
 # Desafio Parte 2
 
-* Considerando o alto volume de transações e cargas de trabalho em grandes quantidades, dividi abaixo possíveis soluções:
+* Considerando o alto volume de transações e cargas de trabalho em grandes quantidades, é necessário montar uma arquitetura robusta e escalável. Portanto, dividi abaixo em 4 possíveis soluções não excludentes entre si, mas são complementares:
 
-    - Como vários processamentos simultânes e cargas de trabalho gigantes, seria interessante utilizarmos um banco de dados distribuído capacidade de lidar com situações como essa. 
-        Existem várias opções no mercado que podem atender essa demanda. Bancos de dados Distribuídos são projetados para escalabilidade horizontal e 
-        alta disponibilidade.
+    - Como vários processamentos simultâneos e cargas de trabalho enormes, seria interessante utilizarmos um banco de dados distribuído com capacidade de lidar com situações como essa. Normalmente esses bancos de dados são projetados para escalabilidade horizontal e podem lidar com grandes volumes de dados e alto desempenho de gravação e leitura. Existem várias opções no mercado que podem atender essa demanda como por exemplo o Apache Cassandra, Amazon DynamoDB e MongoDB. Além de sere projetados para escalabilidade horizontal, esses Bancos de dados Distribuídos possuem alta disponibilidade. Um ponto importante a considerar é o particionamento adequado para distribuir as transações entre os nós do banco de dados distribuído. Deve ser feita uma análise do quanto é importante o particionamento para que seja baseado em alguma chave, como por exemplo em faixa de datas, para garantir uma distribuição equilibrada dos dados.
 
-    - Como apresentado na pergunta que é necessário apresentar o valor total do mês, uma abordagem interessante para isto seria adotar o processamento em Lote. Com todas as transações
-        armazenadas podemos executar um processamento em lote para o cáculo do ganho total mensal. Isso permite que podemos processar grandes volumes de dados de forma paralela. 
-        A ferramenta mais interessante e que é amplamente utilizada no mercado é o Apache Spark e para armazenamento poderia ser utilizado o Azure Data Lake Gen2, que é integrado no Azure com o Spark.
-        Ainda com essa preocupação de termos cáculo do ganho total mensal, podemos também armazenar os resultados agregados em um banco de dados separado, como um banco de dados colunar, 
-        que é otimizado para consultas analíticas. Dessa forma você poderá obter resultados pré-calculados do valor total do mês, economizando tempo de processamento.
+    - Como na pergunta foi determinado que é necessário apresentar o valor total do mês, uma abordagem interessante para isto seria adotar um processamento em Lote e um armazenamento adequado. Para isso, com todas as transações armazenadas, podemos executar um processamento em lote para o cálculo do ganho total mensal. Esse processamento em lote de dados pode ser realizado de forma paralela. A ferramenta mais comum e que é amplamente utilizada no mercado é o Apache Spark. Ele permite realizar Jobs de processamento que são executados em intervalos regulares para processar os dados de transações e calcular o valor total do mês. Esses Jobs podem ler os dados de algumas fontes como banco de dados distribuído ou ferramentas de mensagens como Kafka, Hubs Event, SNS AWS, Pub/Sub, entre outros. Com isso nos permite aplicar as transformações necessárias, calcular, e armazenar o resultado desejado. Tanto o banco de dados distribuído pode ser utilizado para consultas futuras e relatórios, quanto um data warehouse, ou até mesmo um Lake House . O Azure Synapse e o Databricks são boas opções para isso.
 
-    - Quando estamos tratando de m volume gigantesco de transações podemos adotar o Balanceamento de carga. Isso faz com que consigamos a distribuição de carga de forma equilibrada entre os serviços da Cloud.
-        O Balanceamento de carga também evita gargalos e maximiza o desempenho.
+    - Quando estamos tratando de um volume gigantesco de transações, podemos adotar o Balanceamento de carga. Isso faz com que consigamos a distribuição de carga de forma equilibrada entre as requisições e os serviços da Cloud. O Balanceamento de carga também evita gargalos e maximiza o desempenho. Com isso, podemos escalar o poder de processamento, memoria ou armazenamento de forma segura e sazonal. Poderíamos citar Uma ferramenta muito robusta para esta tarefa que é o Azure Load Balancer.
 
-    - Quando estamos lidando com volumes de transações dessa magnitude é importante Monitorar e realizar Logging dessas transações. Isso é uma estratégia tanto para identificar problemas quanto para otimizar
-        o desempenho dos recursos utilizados.
-        
+    - Quando estamos lidando com volumes de transações dessa magnitude é importante Monitorar e realizar Logging dessas transações. Isso é uma estratégia tanto para identificar problemas quanto para otimizar desempenho dos recursos utilizados. Com isso, para que possamos aprimorar as consultas e otimizações, podemos criar índices apropriados, utilizar de partições adequadas e otimizar o banco. Uma ferramenta interessando é o Azure Monitor. Ele permite realizar coleta de métricas, registro de logs, alertas e ações automatizadas e integração com outras ferramentas e serviços como o Azure Log Analytics, Azure Application Insights e Azure Functions.
+
 
     
